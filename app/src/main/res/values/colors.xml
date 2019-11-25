@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/blue</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">@color/blue</color>
+
+    <color name="black">#000000</color>
+    <color name="blue">#FF1B97FC</color>
+    <color name="orange">#f6a120</color>
+    <color name="gray">#363739</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#FF0000</color>
+    <color name="tool_bar_blue">#1B6AB5</color>
+    <color name="low_blue">#C9D1FF</color>
+    <color name="wave_start">#E2BA9D</color>
+    <color name="wave_end">#E2BA9D</color>
+    <color name="text_color_gold">#E6BEA0</color>
+    <color name="divider">#333333</color>
+    <color name="menu_item">#B0B0B0</color>
+    <color name="black_transparent">#D9000000</color>
+</resources>

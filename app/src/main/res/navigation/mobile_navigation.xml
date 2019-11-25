@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_bluetooth">
+
+    <fragment
+        android:id="@+id/nav_bluetooth"
+        android:name="com.tl.veger.navigation.bluetooth.BluetoothFragment"
+        android:label="@string/menu_bluetooth"
+        tools:layout="@layout/fragment_bluetooth" />
+
+    <fragment
+        android:id="@+id/nav_controlPanel"
+        android:name="com.tl.veger.navigation.controlPanel.ControlPanelFragment"
+        android:label="@string/menu_control_panel"
+        tools:layout="@layout/fragment_control_panel" />
+
+    <fragment
+        android:id="@+id/nav_chargingStatus"
+        android:name="com.tl.veger.navigation.chargingStatus.ChargingStatusFragment"
+        android:label="@string/menu_charging_status"
+        tools:layout="@layout/fragment_charging_status" />
+
+</navigation>

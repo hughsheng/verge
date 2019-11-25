@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/arrow" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.tl.veger.widge.SmartTabBar
+                android:id="@+id/tab_navigation_bar"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="50dp">
+
+                <LinearLayout
+                    android:id="@+id/navigation_bar_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+
+            </com.tl.veger.widge.SmartTabBar>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/scroll_bar_bg" />
+        </FrameLayout>
+
+
+        <com.tl.veger.widge.ShowNumberByPic
+            android:id="@+id/showNumberByPic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" />
+
+
+        <ImageView
+            android:id="@+id/charge_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/not_charging" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/no_charge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wave_start" />
+
+    <com.tl.veger.widge.waves.MultiWaveHeader
+        android:id="@+id/charge_wave"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleY="-1"
+        app:mwhVelocity="1"
+        app:mwhProgress="1"
+        app:mwhIsRunning="true"
+        app:mwhGradientAngle="45"
+        app:mwhWaveHeight="20dp"
+        app:mwhColorAlpha="0.45"
+        app:mwhStartColor="@color/wave_start"
+        app:mwhCloseColor="@color/wave_end"
+        app:mwhWaves="
+            70,10,1.1,1.1,300
+            170,5,1.2,1.2,300
+            270,0,1.1,1.1,300" />
+
+</LinearLayout>

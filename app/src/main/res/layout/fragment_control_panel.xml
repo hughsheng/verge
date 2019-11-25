@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="@color/divider" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:id="@+id/luminance_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/luminance_selected" />
+
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/beam_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/radioStyle"
+                android:background="@drawable/selector_beam" />
+
+            <RadioButton
+                android:id="@+id/mild_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/radioStyle"
+                android:background="@drawable/selector_mild" />
+
+            <RadioButton
+                android:id="@+id/glimmer_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/radioStyle"
+                android:background="@drawable/selector_glimmer"
+                android:checked="true" />
+
+
+            <RadioButton
+                android:id="@+id/off_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/radioStyle"
+                android:background="@drawable/selector_off" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:rowCount="4">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/connection_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_connection" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/gesture_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_gesture" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/clock_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_clock" />
+        </LinearLayout>
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/weather_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_weather" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/battery_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_battery" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/message_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_message" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/call_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_call" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridStyle">
+            <CheckBox
+                android:id="@+id/email_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/control_checkBox"
+                android:background="@drawable/selector_email" />
+        </LinearLayout>
+
+
+    </GridLayout>
+</LinearLayout>

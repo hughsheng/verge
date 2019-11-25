@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">VERGE</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_bluetooth">Bluetooth</string>
+    <string name="menu_control_panel">&#8197;Control Panel</string>
+    <string name="menu_charging_status">&#8197;Charging Status</string>
+    <string name="menu_software_update">&#8197;Software Update</string>
+
+    <string name="state_device_nearby">DEVICE NEARBY</string>
+    <string name="state_bluetooth_paired">BLUETOOTH PAIRED</string>
+    <string name="state_bluetooth_pairing">BLUETOOTH PAIRING</string>
+    <string name="state_pairing_failed">PAIRING FAILED</string>
+</resources>

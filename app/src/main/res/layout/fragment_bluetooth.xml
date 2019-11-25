@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+
+    <ImageView
+        android:id="@+id/bluetooth_bg_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/wave_layout"
+        android:layout_marginBottom="-106dp"
+        android:visibility="invisible"
+        android:src="@mipmap/veger_bg" />
+
+    <TextView
+        android:id="@+id/search_state_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:letterSpacing="0.1"
+        android:textColor="@color/text_color_gold"
+        android:text="@string/state_device_nearby" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_rv"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/search_state_tv" />
+
+
+    <FrameLayout
+        android:id="@+id/wave_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp">
+        <ImageView
+            android:id="@+id/search_wave1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_orange_circle"
+            />
+        <ImageView
+            android:id="@+id/search_wave2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_orange_circle"
+            />
+        <ImageView
+            android:id="@+id/search_wave3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_orange_circle"
+            />
+        <ImageView
+            android:id="@+id/search_bluetooth_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="65dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/bluetooth_no_circle" />
+
+        <ImageView
+            android:id="@+id/bluetooth_connect_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="65dp"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:src="@mipmap/bluetooth_connected"
+            />
+    </FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/search_bottom_tip_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/searching_tip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp" />
+
+
+</RelativeLayout>
