@@ -45,7 +45,6 @@ public class WelcomeActivity extends BaseActivity implements PermissionUtils.Per
   public void onPermissionResult(boolean hasPermission, int permissionCode) {
     switch (permissionCode) {
       case PermissionUtils.REQUEST_BLUETOOTH:
-        if (hasPermission) {
           ObjectAnimator objectAnimator = AnimationUtils.alpha(welcome_iv);
           objectAnimator.setDuration(5000);
           objectAnimator.start();
@@ -57,7 +56,6 @@ public class WelcomeActivity extends BaseActivity implements PermissionUtils.Per
               finish();
             }
           });
-        }
         break;
 
     }

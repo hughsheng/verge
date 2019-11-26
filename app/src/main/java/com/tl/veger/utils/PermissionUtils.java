@@ -178,12 +178,12 @@ public class PermissionUtils {
       if (blueToothAdapter == null || !blueToothAdapter.isEnabled()) {
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         activity.startActivity(enableBtIntent);
-        Toast.makeText(activity, "请允许打开蓝牙，否则无法正常使用该app", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Please allow Bluetooth to be turned on, otherwise the app cannot be used normally", Toast.LENGTH_SHORT).show();
       } else {
         isOpen = true;
       }
     } else {
-      Toast.makeText(activity, "该设备没有蓝牙无法正常使用该app", Toast.LENGTH_SHORT).show();
+      Toast.makeText(activity, "The app can't be used normally without Bluetooth", Toast.LENGTH_SHORT).show();
     }
     listener.onPermissionResult(isOpen, REQUEST_BLUETOOTH);
   }
