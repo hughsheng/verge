@@ -29,13 +29,14 @@ import com.google.api.services.gmail.GmailScopes;
 import com.tl.veger.HomeActivity;
 import com.tl.veger.R;
 import com.tl.veger.utils.ConstanceValue;
+import com.tl.veger.utils.PermissionUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GoogleLoginActivity extends AppCompatActivity {
+public class GoogleLoginActivity extends AppCompatActivity implements PermissionUtils.PermissionListener{
 
     public TextView mInfo;
     SignInButton login;
@@ -147,6 +148,7 @@ public class GoogleLoginActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(account)) {
             refreshEmailData();
         }
+        checkPermissions();
     }
 
     /**
@@ -242,5 +244,20 @@ public class GoogleLoginActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+
+    private void checkPermissions() {
+        PermissionUtils permissionUtils = PermissionUtils.getInstance(this, this);
+       // permissionUtils.checkPermission(PermissionUtils.REQUEST_BLUETOOTH);
+        permissionUtils.checkPermission(PermissionUtils.REQUEST_SMS);
+     //   permissionUtils.checkPermission(PermissionUtils.REQUEST_CALL);
+      //  permissionUtils.checkPermission(PermissionUtils.REQUEST_LOCATION);
+        //  permissionUtils.checkPermission(PermissionUtils.REQUEST_NOTIFICATION);
+    }
+
+    @Override
+    public void onPermissionResult(boolean hasPermission, int permissionCode) {
+
     }
 }

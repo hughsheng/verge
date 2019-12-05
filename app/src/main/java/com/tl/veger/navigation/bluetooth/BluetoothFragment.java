@@ -172,7 +172,6 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
         }
 
         if (notice.contains("连接成功")) {
-            centerService.enableNotification();
             connectedState();
         }
 

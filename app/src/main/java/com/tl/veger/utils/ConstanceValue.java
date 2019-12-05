@@ -42,15 +42,16 @@ public class ConstanceValue {
     public static final String SWITCH_EMAIL = "email";
 
 
-    public static int current_light;
+    //默认开关状态
+    public static int current_light=60;
     public static int current_bluetooth=1;
-    public static int current_jesture;
-    public static int current_time;
-    public static int current_weather;
-    public static int current_battery;
-    public static int current_message;
-    public static int current_call;
-    public static int current_email;
+    public static int current_jesture=1;
+    public static int current_time=1;
+    public static int current_weather=1;
+    public static int current_battery=1;
+    public static int current_message=1;
+    public static int current_call=1;
+    public static int current_email=1;
 
     public static final Lock lock = new ReentrantLock();
 }
