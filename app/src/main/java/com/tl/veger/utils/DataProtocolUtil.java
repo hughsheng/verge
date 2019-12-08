@@ -45,11 +45,10 @@ import java.util.List;
  */
 
 
-
 public class DataProtocolUtil {
 
   // 系统类型
- public static enum DEV_INFO {
+  public static enum DEV_INFO {
     DEV_IOS,
     DEV_ANDROID
   }
@@ -61,18 +60,18 @@ public class DataProtocolUtil {
     MSG_BATTERY,  // 电池信息(电量+充电状态)
     MSG_OPTIONSWITCH, // 开关选项值
     MSG_BRIGHTNESS,  // 亮度级别 (LIGHT_VALUE)
-      MSG_END,//一组数据发送完成
+    MSG_END,//一组数据发送完成
     adsad,
     asdas,
-      rgrge,
-      erger,
-      ergerg,
-      ergertertrg,
-      ergerge,
-      getrrErgerg,
-      ergerrrrrgerg,
-      ergerrrrg,
-      ergergerrrg,
+    rgrge,
+    erger,
+    ergerg,
+    ergertertrg,
+    ergerge,
+    getrrErgerg,
+    ergerrrrrgerg,
+    ergerrrrg,
+    ergergerrrg,
     MSG_CALL,//未接电话17
     MSG_MESSAGE,//未读短信18
     MSG_EMAIL,//未读邮件19
@@ -109,16 +108,15 @@ public class DataProtocolUtil {
   }
 
 
-  public static byte[] getData(MSG_TYPE type,byte[] data){
-    byte[] dataPacket=new byte[data.length+5];
-    dataPacket[0]= (byte) 0xF0;
-    dataPacket[1]= (byte) DEV_INFO.DEV_ANDROID.ordinal();
-    dataPacket[2]= (byte) type.ordinal();
-    dataPacket[3]= (byte) data.length;
-    System.arraycopy(data,0,dataPacket,4,data.length);
+  public static byte[] getData(MSG_TYPE type, byte[] data) {
+    byte[] dataPacket = new byte[data.length + 5];
+    dataPacket[0] = (byte) 0xF0;
+    dataPacket[1] = (byte) DEV_INFO.DEV_ANDROID.ordinal();
+    dataPacket[2] = (byte) type.ordinal();
+    dataPacket[3] = (byte) data.length;
+    System.arraycopy(data, 0, dataPacket, 4, data.length);
     return dataPacket;
   }
-
 
 
 }

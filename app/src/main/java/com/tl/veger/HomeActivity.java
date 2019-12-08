@@ -92,9 +92,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     batteryReceiver=new BatteryReceiver();
     registerReceiver(batteryReceiver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     initNavigation();
-    ConmmonUtil.getWeather();
-    ConmmonUtil.getUnreadSmsCount();
-    ConmmonUtil.getMissCallCount();
   }
 
 

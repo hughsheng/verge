@@ -158,7 +158,8 @@ public class ChargingStatusFragment extends BaseFragment {
 
 
     //更新chargeNeedTimeList
-    float needTime = (float) (100 - ConstanceValue.CURRENT_BATTERY_PERCENT) / 10;
+    DecimalFormat df=new DecimalFormat("0.00");//设置保留位数
+    float needTime= (float) ((100 - ConstanceValue.CURRENT_BATTERY_PERCENT)/3.5);
     String result = String.format("%.1f", needTime);
     chargeNeedTimeList.addAll(ConmmonUtil.getNumberList(result, ConmmonUtil.FLOAT));
 

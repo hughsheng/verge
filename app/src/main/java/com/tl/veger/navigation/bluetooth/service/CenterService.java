@@ -105,7 +105,12 @@ public class CenterService extends Service {
           "与[%s" +
               "]连接出错,错误码:" + status), connectedDev);
       Log.i(TAG, result);
-      sendEventBus(result);
+
+      BluetoothBusBean bluetoothBusBean = new BluetoothBusBean();
+      bluetoothBusBean.setNotice(result);
+      bluetoothBusBean.setConnectedDev(connectedDev);
+      EventBus.getDefault().post(bluetoothBusBean);
+
     }
 
     @Override
@@ -124,6 +129,7 @@ public class CenterService extends Service {
           allUUIDs.append("}");
           // Log.i(TAG, "onServicesDiscovered:" + allUUIDs.toString());
           //  sendEventBus("发现服务" + allUUIDs);
+          enableNotification();
         }
       }
     }
@@ -142,10 +148,9 @@ public class CenterService extends Service {
     public void onCharacteristicWrite(BluetoothGatt gatt,
                                       BluetoothGattCharacteristic characteristic, int status) {
       String uuid = characteristic.getUuid().toString();
-      String valueStr = new String(characteristic.getValue());
-      if(uuid.equalsIgnoreCase(ConstanceValue.SEND_CHARACTERISTIC)){
-        Log.i(TAG, String.format("写入单数据触发"+"onCharacteristicChanged:", uuid));
-        BluetoothBusBean bean=new BluetoothBusBean();
+      if (uuid.equalsIgnoreCase(ConstanceValue.SEND_CHARACTERISTIC)) {
+        Log.i(TAG, String.format("写入单数据触发" + "onCharacteristicChanged:", uuid));
+        BluetoothBusBean bean = new BluetoothBusBean();
         bean.setNotice("sendFinish");
         EventBus.getDefault().post(bean);
       }
@@ -160,10 +165,10 @@ public class CenterService extends Service {
 
       if (uuid.equalsIgnoreCase(ConstanceValue.OBSERVE_CHARACTERISTIC)) {
         count++;
-        if(count>=20){
-          Log.i(TAG, String.format("写入全数据触发"+"onCharacteristicChanged:", uuid));
+        if (count >= 5) {
+          Log.i(TAG, String.format("写入全数据触发" + "onCharacteristicChanged:", uuid));
           sendEventBus("Characteristic发生改变[" + uuid + "]:\n" + valueStr);
-          count=0;
+          count = 0;
         }
       }
     }
@@ -209,21 +214,24 @@ public class CenterService extends Service {
 
 
   //更新特征值数据
-  public   void  sendData(byte[] datas) {
-    if(writeService==null){
+  public void sendData(byte[] datas) {
+    if (writeCharacteristic == null) {
       writeService = connectedGatt.getService(UUID.fromString(ConstanceValue.SERVICE_UUID));
-      if(writeService!=null){
+      if (writeService != null) {
         writeCharacteristic =
-                writeService.getCharacteristic(UUID.fromString(ConstanceValue.SEND_CHARACTERISTIC));
+            writeService.getCharacteristic(UUID.fromString(ConstanceValue.SEND_CHARACTERISTIC));
+        updateData(datas);
       }
+    } else {
+      updateData(datas);
     }
-    if(writeCharacteristic!=null){
-      writeCharacteristic.setValue(datas);
-      ConstanceValue.lock.lock();
-      connectedGatt.writeCharacteristic(writeCharacteristic);
-      Log.i(TAG, "发送的数据为:" + Arrays.toString(datas));
-    }
+  }
 
+
+  private void updateData(byte[] datas) {
+    writeCharacteristic.setValue(datas);
+    connectedGatt.writeCharacteristic(writeCharacteristic);
+    Log.i(TAG, "发送的数据为:" + Arrays.toString(datas));
   }
 
 
@@ -341,7 +349,7 @@ public class CenterService extends Service {
         success = connectedGatt.setCharacteristicNotification(characteristic, true);
         if (success) {
           // 来源：http://stackoverflow.com/questions/38045294/oncharacteristicchanged-not-called
-            // -with-ble
+          // -with-ble
           for (BluetoothGattDescriptor dp : characteristic.getDescriptors()) {
             if (dp != null) {
               if ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0) {

@@ -19,6 +19,7 @@ import com.tl.veger.R;
 import com.tl.veger.base.app.AppApplication;
 import com.tl.veger.navigation.bluetooth.adapter.WeatherBean;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,7 +89,7 @@ public class ConmmonUtil {
     byte[] time = new byte[4];
     Calendar calendars = Calendar.getInstance();
     calendars.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-    int hour = calendars.get(Calendar.HOUR);
+    int hour = calendars.get(Calendar.HOUR_OF_DAY);
     int min = calendars.get(Calendar.MINUTE);
     int sec = calendars.get(Calendar.SECOND);
     boolean is24HourMode = DateFormat.is24HourFormat(AppApplication.getInstance());
@@ -133,7 +134,8 @@ public class ConmmonUtil {
         BufferedReader reader = null;
         String weatherUrl =
             "http://api.openweathermap.org/data/2.5/weather?" + "lat=" + ConstanceValue.LAT +
-            "&" + "lon=" + ConstanceValue.LONG + "&" + "APPID=a4ae2495b1086cf372587e0c51e507df" +
+                "&" + "lon=" + ConstanceValue.LONG + "&" + "APPID" +
+                "=a4ae2495b1086cf372587e0c51e507df" +
                 "&units=metric";
         try {
           URL url = new URL(weatherUrl);//新建URL
@@ -170,7 +172,8 @@ public class ConmmonUtil {
             ConstanceValue.WEATHER[2] = 0;
           }
           Log.i("mylog", response.toString());
-          Log.i("mylog", "温度：" + ConstanceValue.WEATHER[0] + "---------" + "icon=" + ConstanceValue.WEATHER[1] + "---------" + "温度零上还是零下="+ConstanceValue.WEATHER[2]);
+          Log.i("mylog",
+              "温度：" + ConstanceValue.WEATHER[0] + "---------" + "icon=" + ConstanceValue.WEATHER[1] + "---------" + "温度零上还是零下=" + ConstanceValue.WEATHER[2]);
         } catch (Exception e) {
           e.printStackTrace();
         } finally {
@@ -190,36 +193,48 @@ public class ConmmonUtil {
   }
 
   //得到未读短信的数量  通过查询数据库得到
-  public static void getUnreadSmsCount() {
+  public static boolean getUnreadSmsCount() {
+    boolean hasNew = false;
     Cursor csr = AppApplication.getInstance().getContentResolver().query(Uri.parse("content://sms"
         ), null,
         "type = 1 and read = 0", null, null);
     if (csr != null) {
-      ConstanceValue.UNREAD_SMS = csr.getCount();
+      int unReadMSG=csr.getCount();
+      if (ConstanceValue.UNREAD_SMS !=unReadMSG) {
+        ConstanceValue.UNREAD_SMS = unReadMSG;
+        hasNew = true;
+      }
       Log.i("mylog", "得到的未读短信数量是：" + ConstanceValue.UNREAD_SMS);
       csr.close();
     }
+    return hasNew;
   }
 
   //获取未接电话数量
-  public static void getMissCallCount() {
+  public static boolean getMissCallCount() {
+    boolean hasNew = false;
     Cursor cursor =
         AppApplication.getInstance().getContentResolver().query(CallLog.Calls.CONTENT_URI,
             new String[]{CallLog.Calls.TYPE}, " type=? and new=?",
             new String[]{CallLog.Calls.MISSED_TYPE + "", "1"}, "date desc");
     if (cursor != null) {
-      ConstanceValue.MISS_CALL = cursor.getCount();
+      int missCall = cursor.getCount();
+      if (ConstanceValue.MISS_CALL != missCall) {
+        ConstanceValue.MISS_CALL = missCall;
+        hasNew = true;
+      }
       Log.i("mylog", "得到的未接电话数量是：" + ConstanceValue.MISS_CALL);
       cursor.close();
     }
+    return hasNew;
   }
 
   //获取开关数据
   public static byte[] getSwitchSate() {
     byte[] ss = new byte[8];
-    int bluetooth =ConstanceValue.current_bluetooth;
+    int bluetooth = ConstanceValue.current_bluetooth;
     int jesture = ConstanceValue.current_jesture;
-    int time =ConstanceValue.current_time;
+    int time = ConstanceValue.current_time;
     int weather = ConstanceValue.current_weather;
     int battery = ConstanceValue.current_battery;
     int message = ConstanceValue.current_message;

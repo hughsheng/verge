@@ -2,12 +2,18 @@ package com.tl.veger.base.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.gmail.Gmail;
+import com.tl.veger.R;
 import com.tl.veger.utils.FontsUtils;
 import com.tl.veger.utils.SharedPreferencesUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +59,8 @@ public class AppApplication extends Application {
     }
     return this.height;
   }
+
+
 
 
   /**

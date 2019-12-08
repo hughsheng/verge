@@ -32,6 +32,7 @@ public class BatteryReceiver extends BroadcastReceiver {
             if (lastChargeState != currentState) {
                 ConstanceValue.IS_CHARGING = (currentState == BatteryManager.BATTERY_STATUS_FULL || currentState == BatteryManager.BATTERY_STATUS_CHARGING);
                 lastChargeState=currentState;
+                EventBus.getDefault().post(new BatteryBusBean());
             }
         }
     }
