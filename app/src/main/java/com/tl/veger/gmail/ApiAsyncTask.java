@@ -1,12 +1,14 @@
 
 package com.tl.veger.gmail;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.services.gmail.model.Label;
+import com.tl.veger.HomeActivity;
 import com.tl.veger.utils.ConstanceValue;
 
 import java.io.IOException;

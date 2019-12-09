@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,7 +83,9 @@ public class ConmmonUtil {
     calendars.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
     int hour = calendars.get(Calendar.HOUR);
     int min = calendars.get(Calendar.MINUTE);
-    return hour + min / 60;
+    DecimalFormat df = new DecimalFormat("0.0");
+    float tt=Float.parseFloat(df.format(min / 60.0));
+    return hour + tt;
   }
 
   public static byte[] getCurrentTimeForByte() {

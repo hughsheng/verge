@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.BatteryManager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tl.veger.R;
 import com.tl.veger.base.BaseFragment;
@@ -53,6 +55,7 @@ public class ChargingStatusFragment extends BaseFragment {
   private List<Integer> chargeNeedTimeList = new ArrayList<>();//充满电需要的时间
   private List<Integer> chargeTimeList = new ArrayList<>();//充满电的时间
   private batterystate state = batterystate.BATTERY_PERCENTAGE;
+  private ArrayList<Integer> blockList=new ArrayList<>();
 
   private enum batterystate {
     BATTERY_PERCENTAGE, COUNTDOWN_TO_FULLY_CHARGED, BATTERY_TIME_REMAINING, BATTERY_FULL_TIME
@@ -68,8 +71,16 @@ public class ChargingStatusFragment extends BaseFragment {
     EventBus.getDefault().register(this);
     initTab();
     setData();
+    setBlockList();
   }
 
+
+  private void setBlockList(){
+    blockList.add(0);
+    blockList.add(0);
+    blockList.add(0);
+    blockList.add(0);
+  }
 
   private void initTab() {
 
@@ -117,17 +128,29 @@ public class ChargingStatusFragment extends BaseFragment {
 
           case "Countdown To Fully Charged"://充满电需要的时间
             state = batterystate.COUNTDOWN_TO_FULLY_CHARGED;
-            showNumberByPic.setData(chargeNeedTimeList);
+            if(ConstanceValue.IS_CHARGING){
+              showNumberByPic.setData(chargeNeedTimeList);
+            }else {
+              showNumberByPic.setData(blockList);
+            }
             break;
 
           case "Battery Time Remaining"://剩余电量使用时间
             state = batterystate.BATTERY_TIME_REMAINING;
-            showNumberByPic.setData(batteryList);
+            if(!ConstanceValue.IS_CHARGING){
+              showNumberByPic.setData(batteryList);
+            }else {
+              showNumberByPic.setData(blockList);
+            }
             break;
 
           case "Battery Full Time"://充满电的时间
             state = batterystate.BATTERY_FULL_TIME;
-            showNumberByPic.setData(chargeTimeList);
+            if(ConstanceValue.IS_CHARGING){
+              showNumberByPic.setData(chargeTimeList);
+            }else {
+              showNumberByPic.setData(blockList);
+            }
             break;
         }
 
@@ -147,26 +170,22 @@ public class ChargingStatusFragment extends BaseFragment {
     batteryList.clear();
     chargeNeedTimeList.clear();
     chargeTimeList.clear();
-
+    DecimalFormat df = new DecimalFormat("0.0");
     //更新percentList
     percentList.addAll(ConmmonUtil.getNumberList(ConstanceValue.CURRENT_BATTERY_PERCENT + "",
             ConmmonUtil.INTEGER));
 
     //更新batteryList
-    float canUseTime = (float) ConstanceValue.CURRENT_BATTERY_PERCENT / 10;
-    batteryList.addAll(ConmmonUtil.getNumberList(canUseTime + "", ConmmonUtil.FLOAT));
-
+    double canUseTime = (double) ConstanceValue.CURRENT_BATTERY_PERCENT / 22.0;
+    batteryList.addAll(ConmmonUtil.getNumberList(df.format(canUseTime), ConmmonUtil.FLOAT));
 
     //更新chargeNeedTimeList
-    DecimalFormat df=new DecimalFormat("0.00");//设置保留位数
-    float needTime= (float) ((100 - ConstanceValue.CURRENT_BATTERY_PERCENT)/3.5);
-    String result = String.format("%.1f", needTime);
-    chargeNeedTimeList.addAll(ConmmonUtil.getNumberList(result, ConmmonUtil.FLOAT));
+    float needTime= (float) ((100 - ConstanceValue.CURRENT_BATTERY_PERCENT)*3.5/100);
+    chargeNeedTimeList.addAll(ConmmonUtil.getNumberList(df.format(needTime), ConmmonUtil.FLOAT));
 
     //更新chargeTimeList
     float chargeTime = ConmmonUtil.getCurrentTime() + needTime;
-    String chargeEndTime = String.format("%.1f", chargeTime);
-    chargeTimeList.addAll(ConmmonUtil.getNumberList(chargeEndTime, ConmmonUtil.FLOAT));
+    chargeTimeList.addAll(ConmmonUtil.getNumberList(df.format(chargeTime), ConmmonUtil.FLOAT));
 
     //根据当前所选状态更新ui
     switch (state) {
@@ -174,14 +193,28 @@ public class ChargingStatusFragment extends BaseFragment {
         showNumberByPic.setData(percentList);
         break;
       case BATTERY_FULL_TIME:
-        showNumberByPic.setData(chargeTimeList);
+        if(ConstanceValue.IS_CHARGING){
+          showNumberByPic.setData(chargeTimeList);
+        }else {
+          showNumberByPic.setData(blockList);
+        }
+
         break;
       case BATTERY_TIME_REMAINING:
-        showNumberByPic.setData(batteryList);
+        if(!ConstanceValue.IS_CHARGING){
+          showNumberByPic.setData(batteryList);
+        }else {
+          showNumberByPic.setData(blockList);
+        }
         break;
 
       case COUNTDOWN_TO_FULLY_CHARGED:
-        showNumberByPic.setData(chargeNeedTimeList);
+        if(ConstanceValue.IS_CHARGING){
+          showNumberByPic.setData(chargeNeedTimeList);
+        }else {
+          showNumberByPic.setData(blockList);
+        }
+
         break;
     }
     setChargeState();

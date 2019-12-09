@@ -20,12 +20,12 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="登录Gmail"/>
+        android:text="Login Gmail"/>
 
     <Button
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="清除登录信息"/>
+        android:text="logout"/>
 </LinearLayout>

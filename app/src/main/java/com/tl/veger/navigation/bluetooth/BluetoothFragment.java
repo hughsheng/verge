@@ -529,8 +529,8 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
     battery[0] = (byte) ConstanceValue.CURRENT_BATTERY_PERCENT;
     int state = ConstanceValue.IS_CHARGING ? 1 : 0;
     battery[1] = (byte) state;
-    float needTime= (float) ((100 - ConstanceValue.CURRENT_BATTERY_PERCENT)/3.5);
-    battery[2] = (byte) (needTime*60);
+    float needTime = (float) ((100 - ConstanceValue.CURRENT_BATTERY_PERCENT) / 3.5);
+    battery[2] = (byte) (needTime * 60);
 
     ConstanceValue.bluetoothQueue.offer(DataProtocolUtil.getData(DataProtocolUtil.MSG_TYPE.MSG_BATTERY,
         battery));
@@ -571,6 +571,7 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
     super.onDetach();
     EventBus.getDefault().unregister(this);
     if (centerService != null) {
+      centerService.disconnectDev();
       centerService.unbindService(connection);
     }
   }

@@ -159,7 +159,7 @@ public class GoogleLoginActivity extends AppCompatActivity  {
     SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
     String account = settings.getString(PREF_ACCOUNT_NAME, null);
     if (!TextUtils.isEmpty(account)) {
-      Toast.makeText(this, "您已经登录了", Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, "You're signed in", Toast.LENGTH_SHORT).show();
       refreshEmailData();
       return;
     }
