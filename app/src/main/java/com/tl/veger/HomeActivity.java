@@ -143,6 +143,18 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
   }
 
 
+  @Override
+  protected void onPause() {
+    super.onPause();
+    Log.i("mylife","pause1231231");
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    Log.i("mylife","stop1231231");
+  }
+
   //侧边栏是否支持手势滑动
   public void canJesture(boolean isJesture) {
     if (isJesture) {

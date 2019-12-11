@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -567,12 +568,13 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
 
 
   @Override
-  public void onDetach() {
-    super.onDetach();
+  public void onDestroy() {
+    super.onDestroy();
     EventBus.getDefault().unregister(this);
     if (centerService != null) {
       centerService.disconnectDev();
       centerService.unbindService(connection);
     }
   }
+
 }

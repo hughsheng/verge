@@ -200,6 +200,7 @@ public class GoogleLoginActivity extends AppCompatActivity  {
           mInfo.setText("Data retrieved using the Gmail API:");
           mInfo.setText(TextUtils.join("\n\n", dataStrings));
           startActivity(new Intent(GoogleLoginActivity.this, HomeActivity.class));
+          finish();
         }
       }
     });
