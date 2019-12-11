@@ -1,6 +1,8 @@
 package com.tl.veger.utils;
 
 import android.app.Application;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
@@ -24,6 +26,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -33,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 public class ConmmonUtil {
@@ -84,7 +88,7 @@ public class ConmmonUtil {
     int hour = calendars.get(Calendar.HOUR);
     int min = calendars.get(Calendar.MINUTE);
     DecimalFormat df = new DecimalFormat("0.0");
-    float tt=Float.parseFloat(df.format(min / 60.0));
+    float tt = Float.parseFloat(df.format(min / 60.0));
     return hour + tt;
   }
 
@@ -202,8 +206,8 @@ public class ConmmonUtil {
         ), null,
         "type = 1 and read = 0", null, null);
     if (csr != null) {
-      int unReadMSG=csr.getCount();
-      if (ConstanceValue.UNREAD_SMS !=unReadMSG) {
+      int unReadMSG = csr.getCount();
+      if (ConstanceValue.UNREAD_SMS != unReadMSG) {
         ConstanceValue.UNREAD_SMS = unReadMSG;
         hasNew = true;
       }
@@ -257,4 +261,52 @@ public class ConmmonUtil {
   }
 
 
+  //获取已连上verge设备
+  public static BluetoothDevice getVergeDevice() {
+    BluetoothDevice vergeDevice = null;
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+
+    Class<BluetoothAdapter> bluetoothAdapterClass = BluetoothAdapter.class;//得到BluetoothAdapter
+    // 的Class对象
+
+    try {//得到连接状态的方法
+
+      Method method = bluetoothAdapterClass.getDeclaredMethod("getConnectionState", (Class[]) null);
+
+//打开权限
+
+      method.setAccessible(true);
+
+      int state = (int) method.invoke(adapter, (Object[]) null);
+
+
+      if (state == BluetoothAdapter.STATE_CONNECTED) {
+
+        Set<BluetoothDevice> devices = adapter.getBondedDevices();
+
+        for (BluetoothDevice device : devices) {
+
+          Method isConnectedMethod = BluetoothDevice.class.getDeclaredMethod("isConnected",
+              (Class[]) null);
+
+          method.setAccessible(true);
+
+          boolean isConnected = (boolean) isConnectedMethod.invoke(device, (Object[]) null);
+
+          if (isConnected && device.getName().contains("VERGE")) {
+            vergeDevice = device;
+          }
+
+        }
+
+      }
+
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+
+    }
+    return vergeDevice;
+  }
 }

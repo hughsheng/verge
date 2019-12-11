@@ -22,6 +22,7 @@ import android.util.Log;
 
 import com.tl.veger.base.app.AppApplication;
 import com.tl.veger.busbean.BluetoothBusBean;
+import com.tl.veger.utils.ConmmonUtil;
 import com.tl.veger.utils.ConstanceValue;
 import com.tl.veger.utils.DataProtocolUtil;
 import com.tl.veger.utils.PermissionUtils;
@@ -248,6 +249,12 @@ public class CenterService extends Service {
     devList.clear();
     // Android5.0新增的扫描API，扫描返回的结果更友好，比如BLE广播数据以前是byte[] scanRecord，而新API帮我们解析成ScanRecord类
     bluetoothLeScanner.startScan(mScanCallback);
+    BluetoothDevice vergeDevice = ConmmonUtil.getVergeDevice();
+    if (vergeDevice != null) {
+      BleDev dev = new BleDev(vergeDevice, null);
+      devList.add(dev);
+    }
+
     sendEventBus("正在扫描...");
 //    handler.postDelayed(new Runnable() {
 //      @Override
