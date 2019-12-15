@@ -73,6 +73,7 @@ public class ControlPanelFragment extends BaseFragment implements RadioGroup.OnC
     protected void init() {
         appApplication = AppApplication.getInstance();
         lastOpenId = rg.getCheckedRadioButtonId();
+        setSwitch();
         luminance_iv.setOnClickListener(this);
         rg.setOnCheckedChangeListener(this);
         connection_cb.setOnCheckedChangeListener(this);
@@ -83,7 +84,6 @@ public class ControlPanelFragment extends BaseFragment implements RadioGroup.OnC
         message_cb.setOnCheckedChangeListener(this);
         call_cb.setOnCheckedChangeListener(this);
         email_cb.setOnCheckedChangeListener(this);
-        setSwitch();
     }
 
 

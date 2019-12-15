@@ -89,8 +89,6 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
     private BlueToothAdapter adapter;
     private Bitmap dimPic;
 
-    private boolean isQuit; // 线程退出标志
-
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_bluetooth;
@@ -121,7 +119,6 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
         setListView();
         setListener();
         startsendThread();
-        isQuit = false;
     }
 
 
@@ -372,11 +369,6 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void run() {
                 while (true) {
-                    if (ConstanceValue.isActiveDisconnect)
-                    {
-                        break;
-                    }
-
                     try {
                         Thread.sleep(100);
                         synchronized (ConstanceValue.bluetoothQueue) {

@@ -262,14 +262,6 @@ public class CenterService extends Service {
     }
 
     sendEventBus("正在扫描...");
-//    handler.postDelayed(new Runnable() {
-//      @Override
-//      public void run() {
-//        bluetoothLeScanner.stopScan(mScanCallback); //停止扫描
-//        isScanning = false;
-//        sendEventBus("扫描结束");
-//      }
-//    }, 3000);
   }
 
 
