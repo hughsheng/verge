@@ -164,14 +164,14 @@ public class CenterService extends Service {
       String uuid = characteristic.getUuid().toString();
       String valueStr = new String(characteristic.getValue());
 
-      if (uuid.equalsIgnoreCase(ConstanceValue.OBSERVE_CHARACTERISTIC)) {
-        count++;
-        if (count >= 5) {
-          Log.i(TAG, String.format("写入全数据触发" + "onCharacteristicChanged:", uuid));
-          sendEventBus("Characteristic发生改变[" + uuid + "]:\n" + valueStr);
-          count = 0;
-        }
-      }
+//      if (uuid.equalsIgnoreCase(ConstanceValue.OBSERVE_CHARACTERISTIC)) {
+//        count++;
+//        if (count >= 5) {
+//          Log.i(TAG, String.format("写入全数据触发" + "onCharacteristicChanged:", uuid));
+//          sendEventBus("Characteristic发生改变[" + uuid + "]:\n" + valueStr);
+//          count = 0;
+//        }
+//      }
     }
 
     @Override
@@ -217,11 +217,14 @@ public class CenterService extends Service {
   //更新特征值数据
   public void sendData(byte[] datas) {
     if (writeCharacteristic == null) {
-      writeService = connectedGatt.getService(UUID.fromString(ConstanceValue.SERVICE_UUID));
-      if (writeService != null) {
-        writeCharacteristic =
-            writeService.getCharacteristic(UUID.fromString(ConstanceValue.SEND_CHARACTERISTIC));
-        updateData(datas);
+      if (connectedGatt != null)
+      {
+        writeService = connectedGatt.getService(UUID.fromString(ConstanceValue.SERVICE_UUID));
+        if (writeService != null) {
+          writeCharacteristic =
+              writeService.getCharacteristic(UUID.fromString(ConstanceValue.SEND_CHARACTERISTIC));
+          updateData(datas);
+        }
       }
     } else {
       updateData(datas);
@@ -249,10 +252,13 @@ public class CenterService extends Service {
     devList.clear();
     // Android5.0新增的扫描API，扫描返回的结果更友好，比如BLE广播数据以前是byte[] scanRecord，而新API帮我们解析成ScanRecord类
     bluetoothLeScanner.startScan(mScanCallback);
-    BluetoothDevice vergeDevice = ConmmonUtil.getVergeDevice();
-    if (vergeDevice != null) {
-      BleDev dev = new BleDev(vergeDevice, null);
+    List<BluetoothDevice> vergeDeviceList = ConmmonUtil.getVergeDevice();
+    if (vergeDeviceList != null&&vergeDeviceList.size()>0) {
+      BleDev dev = new BleDev(vergeDeviceList.get(0), null);
       devList.add(dev);
+      BluetoothBusBean bluetoothBusBean = new BluetoothBusBean();
+      bluetoothBusBean.setNotice("有新设备");
+      EventBus.getDefault().post(bluetoothBusBean);
     }
 
     sendEventBus("正在扫描...");

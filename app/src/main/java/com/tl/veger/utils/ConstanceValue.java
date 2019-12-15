@@ -35,6 +35,7 @@ public class ConstanceValue {
   public static int CURRENT_BATTERY_PERCENT;//当前手机电量
   public static boolean IS_CHARGING = false;//是否在充电
   public static boolean isActiveDisconnect=false;//是否主动断开
+  public static boolean isFirstCreated=true;
   public static Gmail mService;
 
   public static final String SWITCH = "switch";
@@ -63,6 +64,6 @@ public class ConstanceValue {
 
 
   //蓝牙数据发送队列
-  public static Queue<byte[]> bluetoothQueue;
+  public static Queue<byte[]> bluetoothQueue= new LinkedList<>();
 
 }
