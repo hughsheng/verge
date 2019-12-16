@@ -103,7 +103,8 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
         }
         else{
             EventBus.getDefault().register(this);
-            Log.e("Fuck---22", "registering event bus for "+this);
+            Log.e("Fuck---222", "registering event bus for "+this);
+            Log.e("Fuck---333", "registering event bus for "+EventBus.getDefault().isRegistered(this));
         }
 
 
