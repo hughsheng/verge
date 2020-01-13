@@ -76,7 +76,7 @@ public class ConstanceValue {
 	public static int current_battery = 1;
 	public static int current_message = 1;
 	public static int current_call = 1;
-	public static int current_email = 1;
+	public static int current_email = 0;
 
 
 	//蓝牙数据发送队列
