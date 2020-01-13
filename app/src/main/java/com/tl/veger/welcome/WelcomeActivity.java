@@ -46,7 +46,7 @@ public class WelcomeActivity extends BaseActivity implements PermissionUtils.Per
       @Override
       public void onAnimationEnd(Animator animation) {
         super.onAnimationEnd(animation);
-        startActivity(new Intent(WelcomeActivity.this, GoogleLoginActivity.class));
+        startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
         finish();
       }
     });

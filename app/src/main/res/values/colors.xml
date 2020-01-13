@@ -18,4 +18,7 @@
     <color name="divider">#333333</color>
     <color name="menu_item">#B0B0B0</color>
     <color name="black_transparent">#D9000000</color>
+
+    <color name="color_897EFF">#897EFF</color>
+    <color name="color_43C4C5">#43C4C5</color>
 </resources>
