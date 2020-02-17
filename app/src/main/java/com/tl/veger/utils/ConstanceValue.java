@@ -68,7 +68,7 @@ public class ConstanceValue {
 
 	//默认开关状态
 	public static boolean sendFinish = true;//是否发送完成
-	public static int current_light = 60;
+	public static int current_light = 100;
 	public static int current_bluetooth = 1;
 	public static int current_jesture = 1;
 	public static int current_time = 1;

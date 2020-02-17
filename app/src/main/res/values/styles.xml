@@ -51,7 +51,13 @@
     </style>
 
     <style name="radioStyle">
-        <item name="android:layout_marginLeft">45dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawableTop">@drawable/selector_beam</item>
+        <item name="android:textSize">0sp</item>
+        <item name="android:background">@null</item>
         <item name="android:button">@null</item>
     </style>
 

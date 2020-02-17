@@ -27,6 +27,7 @@
         android:required="false" />
 
 
+
     <application
         android:name=".base.app.AppApplication"
         android:allowBackup="false"
