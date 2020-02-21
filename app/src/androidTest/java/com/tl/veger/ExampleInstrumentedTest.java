@@ -1,7 +1,7 @@
 package com.tl.veger;
 
 import android.content.Context;
-
+import android.content.Intent;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -21,7 +21,8 @@ public class ExampleInstrumentedTest {
   public void useAppContext() {
     // Context of the app under test.
     Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-    assertEquals("com.tl.veger", appContext.getPackageName());
+    Intent intent = new Intent(appContext,TestActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    appContext.startActivity(intent);
   }
 }

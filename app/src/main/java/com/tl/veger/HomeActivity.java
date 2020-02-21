@@ -199,45 +199,25 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     public void jumpToBluetooth() {
-//        String label = "";
-//        NavDestination currentDestination = navController.getCurrentDestination();
-//        if (currentDestination != null) {
-//            label = currentDestination.getLabel() + "";
-//        }
-//        if (!label.equals(getString(R.string.menu_bluetooth))) {
-//            navController.navigate(R.id.nav_bluetooth);
-//        }
         switchContent(mCurrentContent,bluetoothFragment,BluetoothFragment.TAG);
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        String label = "";
-        NavDestination currentDestination = navController.getCurrentDestination();
-        if (currentDestination != null) {
-            label = currentDestination.getLabel() + "";
-        }
         switch (menuItem.getItemId()) {
             case R.id.nav_controlPanel:
-//                if (!label.equals(getString(R.string.menu_control_panel))) {
-//                    navController.navigate(R.id.nav_controlPanel);
-//                }
                 switchContent(mCurrentContent,controlPanelFragment,ControlPanelFragment.TAG);
                 drawer.closeDrawer(GravityCompat.START);
                 break;
 
             case R.id.nav_chargingStatus:
-//                if (!label.equals(getString(R.string.menu_charging_status))) {
-//                    navController.navigate(R.id.nav_chargingStatus);
-//                }
                 switchContent(mCurrentContent,chargingStatusFragment,ChargingStatusFragment.TAG);
                 drawer.closeDrawer(GravityCompat.START);
                 break;
 
             case R.id.nav_softwareUpdate:
-//        navController.navigate(R.id.nav_softwareUpdate);
-//        drawer.closeDrawer(GravityCompat.START);
+
                 break;
         }
         return false;
