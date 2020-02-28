@@ -19,6 +19,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tl.veger.base.app.AppApplication;
 import com.tl.veger.busbean.BluetoothBusBean;
@@ -28,7 +29,13 @@ import com.tl.veger.utils.DataProtocolUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,6 +73,54 @@ public class CenterService extends Service {
   }
 
 
+  public void postTestLog(String url, int temp, int icon, int flag) {
+
+    new Thread() {
+      @Override
+      public void run() {
+        super.run();
+        try {
+          String result = "";
+          String authHost = "http://139.219.5.166:8080/api/test";
+
+          URL postUrl = new URL(authHost);
+          HttpURLConnection connection = (HttpURLConnection) postUrl.openConnection();
+          // 设置请求方式
+          connection.setRequestMethod("POST");
+          // 设置是否向HttpURLConnection输出
+          connection.setDoOutput(true);
+          // 设置是否从httpUrlConnection读入
+          connection.setDoInput(true);
+          // 设置是否使用缓存
+          connection.setUseCaches(false);
+          //设置参数类型是json格式
+          connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+          connection.connect();
+
+          String body = "{" + "\"url\":" + "\"" + url + "\"" + ", \"temp\":" + temp + ", \"icon\":" + icon + ", \"flag\":" + flag + "}";
+
+          BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+          writer.write(body);
+          writer.close();
+
+          int responseCode = connection.getResponseCode();
+          if (responseCode == HttpURLConnection.HTTP_OK) {
+            //定义 BufferedReader输入流来读取URL的响应
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+              result += line;
+            }
+          }
+          Log.e("Post_Log", result);
+          Log.e("Post_Log", body);
+        } catch (Exception ex) {
+          Log.e("Post_Log", ex.getMessage());
+        }
+      }
+    }.start();
+  }
+
   // 蓝牙扫描Callback
   private final ScanCallback mScanCallback = new ScanCallback() {
     @Override
@@ -73,6 +128,7 @@ public class CenterService extends Service {
       BleDev dev = new BleDev(result.getDevice(), result);
       String name = dev.dev.getName();
       if (name != null && name.contains("VERGE") && !devList.contains(dev)) {
+
         devList.add(dev);
         BluetoothBusBean bluetoothBusBean = new BluetoothBusBean();
         bluetoothBusBean.setNotice("有新设备");
@@ -252,7 +308,7 @@ public class CenterService extends Service {
     // Android5.0新增的扫描API，扫描返回的结果更友好，比如BLE广播数据以前是byte[] scanRecord，而新API帮我们解析成ScanRecord类
     bluetoothLeScanner.startScan(mScanCallback);
     List<BluetoothDevice> vergeDeviceList = ConmmonUtil.getVergeDevice();
-    if (vergeDeviceList != null&&vergeDeviceList.size()>0) {
+    if (vergeDeviceList != null && vergeDeviceList.size()>0) {
       BleDev dev = new BleDev(vergeDeviceList.get(0), null);
       devList.add(dev);
       BluetoothBusBean bluetoothBusBean = new BluetoothBusBean();

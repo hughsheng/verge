@@ -326,12 +326,19 @@ public class ConmmonUtil {
 
     //获取已连上verge设备
     public static List<BluetoothDevice> getVergeDevice() {
-        List<BluetoothDevice> devices = null;
+        List<BluetoothDevice> vergedevices = null;
+
         BluetoothManager bluetoothManager = (BluetoothManager) AppApplication.getInstance().getSystemService(Context.BLUETOOTH_SERVICE);
         if (bluetoothManager != null) {
-            devices = bluetoothManager.getConnectedDevices(BluetoothProfile.GATT);
+            List<BluetoothDevice>   devices = bluetoothManager.getConnectedDevices(BluetoothProfile.GATT);
+            for(BluetoothDevice bluetoothDevice:devices){
+                if(bluetoothDevice.getName().contains("VERGE")){
+                    vergedevices.add(bluetoothDevice);
+                }
+            }
         }
-        return devices;
+
+        return vergedevices;
     }
 
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
