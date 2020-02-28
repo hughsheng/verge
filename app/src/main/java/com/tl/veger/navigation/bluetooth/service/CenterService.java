@@ -25,7 +25,6 @@ import com.tl.veger.busbean.BluetoothBusBean;
 import com.tl.veger.utils.ConmmonUtil;
 import com.tl.veger.utils.ConstanceValue;
 import com.tl.veger.utils.DataProtocolUtil;
-import com.tl.veger.utils.PermissionUtils;
 
 import org.greenrobot.eventbus.EventBus;
 

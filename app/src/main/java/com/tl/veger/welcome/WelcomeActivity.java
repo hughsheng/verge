@@ -4,6 +4,8 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +18,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.github.dfqin.grantor.PermissionListener;
+import com.github.dfqin.grantor.PermissionsUtil;
 import com.tl.veger.HomeActivity;
 import com.tl.veger.R;
 import com.tl.veger.base.BaseActivity;
@@ -23,14 +29,13 @@ import com.tl.veger.gmail.GoogleLoginActivity;
 import com.tl.veger.utils.AnimationUtils;
 import com.tl.veger.utils.ConmmonUtil;
 import com.tl.veger.utils.ConstanceValue;
-import com.tl.veger.utils.PermissionUtils;
-
 import butterknife.BindView;
+
 
 /**
  * created by tl on 2019/8/30
  */
-public class WelcomeActivity extends BaseActivity implements PermissionUtils.PermissionListener {
+public class WelcomeActivity extends BaseActivity {
 
     @BindView(R.id.welcome_iv)
     ImageView welcome_iv;
@@ -43,8 +48,6 @@ public class WelcomeActivity extends BaseActivity implements PermissionUtils.Per
     @Override
     protected void initFragment() {
         checkPermissions();
-
-        initLocationManager();
     }
 
 
@@ -62,28 +65,110 @@ public class WelcomeActivity extends BaseActivity implements PermissionUtils.Per
         });
     }
 
-    private void checkPermissions() {
-        PermissionUtils permissionUtils = PermissionUtils.getInstance(this, this);
-        permissionUtils.checkPermission(PermissionUtils.REQUEST_SMS);
-        permissionUtils.checkPermission(PermissionUtils.REQUEST_CALL);
-        permissionUtils.checkPermission(PermissionUtils.REQUEST_LOCATION);
-        permissionUtils.checkPermission(PermissionUtils.REQUEST_BLUETOOTH);
-
-        ConmmonUtil.getUnreadSmsCount();
-        ConmmonUtil.getMissCallCount();
-
-        //permissionUtils.checkPermission(PermissionUtils.REQUEST_NOTIFICATION);
-    }
-
-    @Override
-    public void onPermissionResult(boolean hasPermission, int permissionCode) {
-        switch (permissionCode) {
-            case PermissionUtils.REQUEST_BLUETOOTH:
-                toHome();
-                break;
+    /**
+     * 检查该设备是否打开蓝牙
+     */
+    private void checkBleSwitch() {
+        boolean isOpen = false;
+        BluetoothManager bluetoothManager = (BluetoothManager) WelcomeActivity.this.getSystemService(Context.BLUETOOTH_SERVICE);
+        if (bluetoothManager != null) {
+            BluetoothAdapter blueToothAdapter = bluetoothManager.getAdapter();
+            if (blueToothAdapter == null || !blueToothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                WelcomeActivity.this.startActivity(enableBtIntent);
+                Toast.makeText(WelcomeActivity.this, "Please allow Bluetooth to be turned on, otherwise the app cannot be used normally", Toast.LENGTH_SHORT).show();
+            } else {
+                isOpen = true;
+            }
+        } else {
+            Toast.makeText(WelcomeActivity.this, "The app can't be used normally without Bluetooth", Toast.LENGTH_SHORT).show();
         }
     }
 
+    /**
+     * 蓝牙和位置权限
+     */
+    private void requestBleAndLocation() {
+
+        PermissionsUtil.requestPermission(this, new PermissionListener() {
+            @Override
+            public void permissionGranted(@NonNull String[] permissions) {
+                // 跳转蓝牙主页
+                toHome();
+
+                // 检测蓝牙开关
+                checkBleSwitch();
+
+                // 获取经纬度
+                initLocationManager();
+
+
+            }
+
+            @Override
+            public void permissionDenied(@NonNull String[] permissions) {
+                Log.e("Fuck", "用户拒绝了-蓝牙权限");
+            }
+        }, new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+        }, false, null);
+    }
+
+    /**
+     * 短信权限
+     */
+    private void requestSms() {
+
+        PermissionsUtil.requestPermission(this, new PermissionListener() {
+            @Override
+            public void permissionGranted(@NonNull String[] permissions) {
+                // 读取短信
+                ConmmonUtil.getUnreadSmsCount();
+            }
+
+            @Override
+            public void permissionDenied(@NonNull String[] permissions) {
+                Log.e("Fuck", "用户拒绝了-消息权限");
+            }
+        }, new String[]{
+                Manifest.permission.READ_SMS,
+                Manifest.permission.RECEIVE_SMS
+        }, false, null);
+    }
+
+    /**
+     * 电话权限
+     */
+    private void requestCall() {
+
+        PermissionsUtil.requestPermission(this, new PermissionListener() {
+            @Override
+            public void permissionGranted(@NonNull String[] permissions) {
+                // 读取未接电话
+                ConmmonUtil.getMissCallCount();
+            }
+
+            @Override
+            public void permissionDenied(@NonNull String[] permissions) {
+                Log.e("Fuck", "用户拒绝了-电话权限");
+            }
+        }, new String[]{
+                Manifest.permission.READ_CALL_LOG,
+                Manifest.permission.WRITE_CALL_LOG
+        }, false, null);
+    }
+
+    /**
+     * 申请app所需要的权限
+     */
+    private void checkPermissions() {
+        requestCall();
+        requestSms();
+        requestBleAndLocation();
+    }
 
     public void initLocationManager() {
         // Get user location

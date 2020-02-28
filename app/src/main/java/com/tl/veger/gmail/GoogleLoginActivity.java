@@ -31,7 +31,6 @@ import com.tl.veger.R;
 import com.tl.veger.base.app.AppApplication;
 import com.tl.veger.utils.ConmmonUtil;
 import com.tl.veger.utils.ConstanceValue;
-import com.tl.veger.utils.PermissionUtils;
 import com.tl.veger.utils.SharedPreferencesUtils;
 
 import java.util.Arrays;

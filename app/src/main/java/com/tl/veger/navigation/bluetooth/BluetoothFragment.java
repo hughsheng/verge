@@ -382,7 +382,6 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
           try {
             Thread.sleep(1000);
 
-            Log.e("Fuck", "-----------------------666");
             if (ConmmonUtil.getUnreadSmsCount()) {
               sendMsg();
             }

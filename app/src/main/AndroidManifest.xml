@@ -29,6 +29,7 @@
 
 
     <application
+        tools:replace="android:allowBackup"
         android:name=".base.app.AppApplication"
         android:allowBackup="false"
         android:icon="@mipmap/veger_desk"
