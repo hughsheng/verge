@@ -381,6 +381,8 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
         while (true) {
           try {
             Thread.sleep(1000);
+
+            Log.e("Fuck", "-----------------------666");
             if (ConmmonUtil.getUnreadSmsCount()) {
               sendMsg();
             }
@@ -388,7 +390,7 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
             if (ConmmonUtil.getMissCallCount()) {
               sendCall();
             }
-            if (ConmmonUtil.getDataFromApi(getActivity()).size() == 3) {
+            if (ConmmonUtil.getDataUnreadNum(getActivity())>0) {
               sendGmail();
             }
 
@@ -443,9 +445,9 @@ public class BluetoothFragment extends BaseFragment implements View.OnClickListe
   private void sendWeather() {
     addData(DataProtocolUtil.getData(DataProtocolUtil.MSG_TYPE.MSG_WEATHER,
 				ConstanceValue.WEATHER));
-    Toast.makeText(getContext(),
-				"温度：" + ConstanceValue.WEATHER[0] + "---------" + "icon=" + ConstanceValue.WEATHER[1] +
-						"---------" + "温度零上还是零下=" + ConstanceValue.WEATHER[2], Toast.LENGTH_SHORT).show();
+//    Toast.makeText(getContext(),
+//				"温度：" + ConstanceValue.WEATHER[0] + "---------" + "icon=" + ConstanceValue.WEATHER[1] +
+//						"---------" + "温度零上还是零下=" + ConstanceValue.WEATHER[2], Toast.LENGTH_SHORT).show();
   }
 
   //发送时间

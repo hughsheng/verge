@@ -81,8 +81,8 @@ public class ChargingStatusFragment extends BaseFragment {
   @Override
   protected void init() {
     EventBus.getDefault().register(this);
-    initTab();
     setData();
+    initTab();
     setBlockList();
   }
 
@@ -272,9 +272,6 @@ public class ChargingStatusFragment extends BaseFragment {
       charge_wave.setVisibility(View.GONE);
       charge_iv.setImageResource(R.mipmap.not_charging);
     }
-    BluetoothBusBean bluetoothBusBean = new BluetoothBusBean();
-    bluetoothBusBean.setNotice(ConstanceValue.SWITCH_BATTERY);
-    EventBus.getDefault().post(bluetoothBusBean);
   }
 
 

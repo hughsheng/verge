@@ -61,7 +61,7 @@ public class ShowNumberByPic extends LinearLayout {
       replacePicFromNumber(data.get(1),snbp_two);
       replacePicFromNumber(data.get(2),snbp_three);
       replacePicFromNumber(data.get(3),snbp_four);
-    }else {
+    }else if(data.size()>=2){
       showType(PERCENT);
       replacePicFromNumber(data.get(0),snbp_p_one);
       replacePicFromNumber(data.get(1),snbp_p_two);
